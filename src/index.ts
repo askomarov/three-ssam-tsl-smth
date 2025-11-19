@@ -218,11 +218,11 @@ const sketch: Sketch<"webgpu"> = async ({
   // Начальная позиция группы (дефолтная позиция)
   blobGroup.position.copy(defaultPosition);
 
-  var blobGeometry = blob.geometry;
-  var blopPosition = blobGeometry.getAttribute("position");
+  let blobGeometry = blob.geometry as THREE.BufferGeometry;
+  const blopPosition = blobGeometry.getAttribute("position");
 
   blobGeometry.deleteAttribute("uv");
-  blobGeometry = mergeVertices(blobGeometry);
+  blobGeometry = mergeVertices(blobGeometry) as THREE.BufferGeometry;
   blobGeometry.computeVertexNormals();
 
   // Создаём SimplexNoise для анимации
@@ -238,12 +238,12 @@ const sketch: Sketch<"webgpu"> = async ({
   // );
 
   // Создаем uniform'ы для параметров displacement
-  const displacementScale = uniform(0.024);
+  const displacementScale = uniform(0.005);
   const tileFactor = uniform(10.0);
 
   // Параметры для полосного displacement
   const stripeWidth = uniform(10.0);
-  const stripeAngle = uniform(45.0);
+  const stripeAngle = uniform(135.0);
 
   // Настраиваем post-processing
   const postProcessing = new PostProcessing(renderer);
@@ -347,7 +347,7 @@ const sketch: Sketch<"webgpu"> = async ({
       displacementScale: 0.024,
       tileFactor: 10.0,
       stripeWidth: 10.0,
-      stripeAngle: 45.0,
+      stripeAngle: 135.0,
       useStripeEffect: false,
       inLightEnabled: true,
       outLightEnabled: true,
